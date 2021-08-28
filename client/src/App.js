@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import LoginPage from './Components/Login/index';
+import LoginPage from './Components/Login';
 import 'antd/dist/antd.css';
 import Resetpassword from "./Components/User/resetPassword";
 import Layout from "./Components/Page/layout";
-import Admin from "./Components/Admin/index";
-import Header from './Components/Page/header/index'
-import User from './Components/User/index'
-import Assistant from './Components/assistant/index'
+import Admin from "./Components/Admin";
+import Header from './Components/Page/header'
+import User from './Components/User'
+import Assistant from './Components/assistant'
 import Order from './Components/Admin/order';
 
 function App() {

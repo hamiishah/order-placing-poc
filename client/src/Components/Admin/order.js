@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
-import '../Page/layout.css'
-import Header from '../Page/header/index'
-import {Table, Tag, Space,Modal, Button,Form, Input } from 'antd';
+import React from 'react';
+import '../User/index.css'
+import { useHistory } from "react-router-dom";
+import Header from '../Page/header'
+import {Space, Table, Tag,Button} from 'antd';
+import {LeftOutlined} from "@ant-design/icons";
 
 const Layout = () => {
+    const history = useHistory();
     const columns = [
         {
             title: 'Name',
@@ -81,10 +84,11 @@ const Layout = () => {
             <div>
                 <Header/>
             </div>
-            <div className="container">
-                <div>
-                    <Table columns={columns} dataSource={data} />
-                </div>
+            <div className="table">
+                <Button type="primary" onClick={() => history.goBack()}>
+                    <LeftOutlined />Back to main page
+                </Button>
+                <Table columns={columns} dataSource={data} />
             </div>
         </div>
     );
