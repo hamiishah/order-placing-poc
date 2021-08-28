@@ -1,0 +1,19 @@
+.container{
+    padding: 20px;
+}
+.cards{
+    margin-bottom: 40px;
+}
+.user-card{
+    padding-bottom: 35px;
+}
+.Add-users{
+    margin-right: 20px;
+    margin-bottom: 40px;
+}
+.order-cards{
+    display: flex;
+    padding-left: 40px;
+    margin-top: 30px;
+    justify-content: space-between;
+}

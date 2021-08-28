@@ -1,0 +1,19 @@
+.container{
+    padding: 20px;
+}
+.Add-users{
+    margin-right: 20px;
+}
+.order-cards{
+    display: flex;
+    margin-top: 40px;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+.table{
+    padding: 30px;
+}
+.price{
+    margin-top: 15px;
+    color: gray;
+}
