@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './index.css'
 import Header from '../Page/header'
-import {Card, Space, Modal, Button, Form, Input,
+import {Card, notification, Modal, Button, Form, Input,
     DatePicker,
     InputNumber,} from 'antd';
 import {PlusCircleOutlined} from "@ant-design/icons";
@@ -9,9 +9,17 @@ import {PlusCircleOutlined} from "@ant-design/icons";
 
 const Layout = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const onFinish = (values: any) => {
+    const onFinish = (values) => {
         console.log('Success:', values);
         setIsModalVisible(false);
+        openNotificationWithIcon('success')
+    };
+    const openNotificationWithIcon = type => {
+        notification[type]({
+            message: 'Notification Title',
+            description:
+                'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+        });
     };
     const handleCancel = () => {
         setIsModalVisible(false);

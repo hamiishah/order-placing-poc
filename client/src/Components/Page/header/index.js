@@ -1,7 +1,18 @@
 import React from 'react';
 import './header.css'
+import { useHistory } from "react-router-dom";
+import { notification, Space } from 'antd';
 
 const Heeader =()=>{
+    const history = useHistory();
+    const openNotificationWithIcon = type => {
+        history.push("/");
+        notification[type]({
+            message: 'Notification Title',
+            description:
+                'Successfully Logout.',
+        });
+    };
     return(
         <>
             <header className="p-3 mb-3 bg-light border-bottom">
@@ -31,7 +42,7 @@ const Heeader =()=>{
                                 <li>
                                     <hr className="dropdown-divider"/>
                                 </li>
-                                <li><a className="dropdown-item" href="/">Sign out</a></li>
+                                <li><a className="dropdown-item" onClick={() => openNotificationWithIcon('success')}>Sign out</a></li>
                             </ul>
                         </div>
                     </div>

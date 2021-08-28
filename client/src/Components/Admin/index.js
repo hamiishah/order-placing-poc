@@ -4,7 +4,7 @@ import {v4 as uuidv4} from 'uuid';
 import { useHistory } from "react-router-dom";
 import Header from '../Page/header'
 import {PlusCircleOutlined} from '@ant-design/icons';
-import { Card, Col, Row,Table, Tag, Space,Modal, Button,Form, Input, Select } from 'antd';
+import {Card, Col, Row, Table, Tag, Space, Modal, Button, Form, Input, Select, notification} from 'antd';
 
 const Layout = () => {
     const { Option } = Select;
@@ -17,6 +17,15 @@ const Layout = () => {
         console.log('Success:', values);
         localStorage.setItem("TestLogin", JSON.stringify(values));
         setIsModalVisible(false);
+        openNotificationWithIcon('success')
+    };
+
+    const openNotificationWithIcon = type => {
+        notification[type]({
+            message: 'Notification Title',
+            description:
+                'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+        });
     };
     const handleCancel = () => {
         setIsModalVisible(false);
@@ -24,6 +33,7 @@ const Layout = () => {
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
         setIsModalVisible(false);
+        openNotificationWithIcon('error')
     };
     const showModal = () => {
         setIsModalVisible(true);
