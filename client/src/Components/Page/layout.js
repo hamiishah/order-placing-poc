@@ -1,31 +1,13 @@
 import React, { useState } from 'react';
-import '../Page/layout.css'
-import {v4 as uuidv4} from 'uuid';
-import { useHistory } from "react-router-dom";
-import Header from '../Page/header/index'
+import './layout.css'
+import Header from './header'
 import {PlusCircleOutlined} from '@ant-design/icons';
-import { Card, Col, Row,Table, Tag, Space,Modal, Button,Form, Input } from 'antd';
+import { Card, Col, Row,Table, Tag, Space,Modal, Button,Form, Input, Checkbox } from 'antd';
 
 const Layout = () => {
-    const history = useHistory();
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [categories, setcategories]= useState();
-    const handlecard =()=>{
-        history.push("/admin/orders");
-    }
     const onFinish = (values: any) => {
         console.log('Success:', values);
-        let email = JSON.parse(localStorage.getItem("email"));
-        let password = JSON.parse(localStorage.getItem("password"));
-        if (!email && !password) {
-            localStorage.setItem("email", JSON.stringify([]))
-            localStorage.setItem("password", JSON.stringify([]))
-        }
-        let cat = JSON.parse(localStorage.getItem("categories"));
-        cat?.push({id: uuidv4(), email: email, password:password})
-        localStorage.setItem("categories", JSON.stringify(cat));
-        let category = JSON.parse(localStorage.getItem("categories"));
-        setcategories(category);
         setIsModalVisible(false);
     };
     const handleCancel = () => {
@@ -127,7 +109,6 @@ const Layout = () => {
                     </Col>
                     <Col span={11}>
                         <Card
-                            onClick={handlecard}
                             hoverable title="Orders" bordered={true}>
                             <p>Total number of Product Orders : 290</p>
                             <p>Accept Orders : 20</p>
@@ -176,6 +157,6 @@ const Layout = () => {
                 </div>
             </div>
         </div>
-    );
+            );
 };
 export default Layout;

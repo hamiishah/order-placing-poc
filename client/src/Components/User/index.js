@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './index.css'
-import Header from '../Page/header/index'
+import Header from '../Page/header'
 import {Card, Space, Modal, Button, Form, Input,
     DatePicker,
     InputNumber, Table, Tag,} from 'antd';
