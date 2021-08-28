@@ -101,230 +101,45 @@ const Layout = () => {
                 <Header/>
             </div>
             <div className="order-cards">
-                <Card
-                    hoverable
-                    style={{ width: 240 }}
-                    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-                >
-                    <Meta title="Product 1" />
-                    <p className="price">Price: 15$</p>
-                    <div className="Add-users">
-                        <Button type="primary" onClick={showModal}>
-                            <PlusCircleOutlined />Add order
-                        </Button>
-                        <Modal title="Add User" visible={isModalVisible} footer={null} onCancel={handleCancel}>
-                            <Form
-                                name="basic"
-                                initialValues={{ remember: true }}
-                                onFinish={onFinish}
-                                onFinishFailed={onFinishFailed}
+                <div className="Add-users">
+                    <Button type="primary" onClick={showModal}>
+                        <PlusCircleOutlined />Add card Detail
+                    </Button>
+                    <Modal title="Add User" visible={isModalVisible} footer={null} onCancel={handleCancel}>
+                        <Form
+                            name="basic"
+                            initialValues={{ remember: true }}
+                            onFinish={onFinish}
+                            onFinishFailed={onFinishFailed}
+                        >
+                            <Form.Item
+                                label="Card No"
+                                name="Card No"
+                                rules={[{ required: true, message: 'Please input your cardnumber!' }]}
                             >
-                                <Form.Item
-                                    label="Card No"
-                                    name="Card No"
-                                    rules={[{ required: true, message: 'Please input your cardnumber!' }]}
-                                >
-                                    <Input />
-                                </Form.Item>
-                                <Form.Item label="Select Date"
-                                           rules={[{ required: true, message: 'Please Select date!' }]}
-                                >
-                                    <DatePicker />
-                                </Form.Item>
-                                <Form.Item label="Add Amount"
-                                           rules={[{ required: true, message: 'Please Add Amount!' }]}
-                                >
-                                    <InputNumber />
-                                </Form.Item>
-
-                                <Form.Item wrapperCol={{ offset: 20 }}>
-                                    <Button type="primary" htmlType="submit">
-                                        Submit
-                                    </Button>
-                                </Form.Item>
-                            </Form>
-                        </Modal>
-                    </div>
-                </Card>,
-                <Card
-                    hoverable
-                    style={{ width: 240 }}
-                    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-                >
-                    <Meta title="Product 2" />
-                    <p className="price">Price: 15$</p>
-                    <div className="Add-users">
-                        <Button type="primary" onClick={showModal}>
-                            <PlusCircleOutlined />Add order
-                        </Button>
-                        <Modal title="Add User" visible={isModalVisible} footer={null} onCancel={handleCancel}>
-                            <Form
-                                name="basic"
-                                initialValues={{ remember: true }}
-                                onFinish={onFinish}
-                                onFinishFailed={onFinishFailed}
+                                <Input maxLength="16"/>
+                            </Form.Item>
+                            <Form.Item label="Select Date"
+                                       name="date"
+                                       rules={[{ required: true, message: 'Please Select date!' }]}
                             >
-                                <Form.Item
-                                    label="Card No"
-                                    name="Card No"
-                                    rules={[{ required: true, message: 'Please input your cardnumber!' }]}
-                                >
-                                    <Input />
-                                </Form.Item>
-                                <Form.Item label="Select Date"
-                                           rules={[{ required: true, message: 'Please Select date!' }]}
-                                >
-                                    <DatePicker />
-                                </Form.Item>
-                                <Form.Item label="Add Amount"
-                                           rules={[{ required: true, message: 'Please Add Amount!' }]}
-                                >
-                                    <InputNumber />
-                                </Form.Item>
-
-                                <Form.Item wrapperCol={{ offset: 20 }}>
-                                    <Button type="primary" htmlType="submit">
-                                        Submit
-                                    </Button>
-                                </Form.Item>
-                            </Form>
-                        </Modal>
-                    </div>
-                </Card>,
-                <Card
-                    hoverable
-                    style={{ width: 240 }}
-                    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-                >
-                    <Meta title="Product 3" />
-                    <p className="price">Price: 15$</p>
-                    <div className="Add-users">
-                        <Button type="primary" onClick={showModal}>
-                            <PlusCircleOutlined />Add order
-                        </Button>
-                        <Modal title="Add User" visible={isModalVisible} footer={null} onCancel={handleCancel}>
-                            <Form
-                                name="basic"
-                                initialValues={{ remember: true }}
-                                onFinish={onFinish}
-                                onFinishFailed={onFinishFailed}
+                                <DatePicker required />
+                            </Form.Item>
+                            <Form.Item label="Add Amount"
+                                       name="amount"
+                                       rules={[{ required: true, message: 'Please Add Amount!' }]}
                             >
-                                <Form.Item
-                                    label="Card No"
-                                    name="Card No"
-                                    rules={[{ required: true, message: 'Please input your cardnumber!' }]}
-                                >
-                                    <Input />
-                                </Form.Item>
-                                <Form.Item label="Select Date"
-                                           rules={[{ required: true, message: 'Please Select date!' }]}
-                                >
-                                    <DatePicker />
-                                </Form.Item>
-                                <Form.Item label="Add Amount"
-                                           rules={[{ required: true, message: 'Please Add Amount!' }]}
-                                >
-                                    <InputNumber />
-                                </Form.Item>
+                                <InputNumber />
+                            </Form.Item>
 
-                                <Form.Item wrapperCol={{ offset: 20 }}>
-                                    <Button type="primary" htmlType="submit">
-                                        Submit
-                                    </Button>
-                                </Form.Item>
-                            </Form>
-                        </Modal>
-                    </div>
-                </Card>,
-                <Card
-                    hoverable
-                    style={{ width: 240 }}
-                    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-                >
-                    <Meta title="Product 4" />
-                    <p className="price">Price: 15$</p>
-                    <div className="Add-users">
-                        <Button type="primary" onClick={showModal}>
-                            <PlusCircleOutlined />Add order
-                        </Button>
-                        <Modal title="Add User" visible={isModalVisible} footer={null} onCancel={handleCancel}>
-                            <Form
-                                name="basic"
-                                initialValues={{ remember: true }}
-                                onFinish={onFinish}
-                                onFinishFailed={onFinishFailed}
-                            >
-                                <Form.Item
-                                    label="Card No"
-                                    name="Card No"
-                                    rules={[{ required: true, message: 'Please input your cardnumber!' }]}
-                                >
-                                    <Input />
-                                </Form.Item>
-                                <Form.Item label="Select Date"
-                                           rules={[{ required: true, message: 'Please Select date!' }]}
-                                >
-                                    <DatePicker />
-                                </Form.Item>
-                                <Form.Item label="Add Amount"
-                                           rules={[{ required: true, message: 'Please Add Amount!' }]}
-                                >
-                                    <InputNumber />
-                                </Form.Item>
-
-                                <Form.Item wrapperCol={{ offset: 20 }}>
-                                    <Button type="primary" htmlType="submit">
-                                        Submit
-                                    </Button>
-                                </Form.Item>
-                            </Form>
-                        </Modal>
-                    </div>
-                </Card>,
-                <Card
-                    hoverable
-                    style={{ width: 240 }}
-                    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-                >
-                    <Meta title="Product 5"/>
-                    <p className="price">Price: 15$</p>
-                    <div className="Add-users">
-                        <Button type="primary" onClick={showModal}>
-                            <PlusCircleOutlined />Add order
-                        </Button>
-                        <Modal title="Add User" visible={isModalVisible} footer={null} onCancel={handleCancel}>
-                            <Form
-                                name="basic"
-                                initialValues={{}}
-                                onFinish={onFinish}
-                                onFinishFailed={onFinishFailed}
-                            >
-                                <Form.Item
-                                    label="Card No"
-                                    name="Card No"
-                                    rules={[{ required: true, message: 'Please input your cardnumber!' }]}
-                                >
-                                    <Input />
-                                </Form.Item>
-                                <Form.Item label="Select Date"
-                                >
-                                    <DatePicker />
-                                </Form.Item>
-                                <Form.Item label="Add Amount"
-                                           rules={[{ required: true, message: 'Please Add Amount!' }]}
-                                >
-                                    <InputNumber />
-                                </Form.Item>
-
-                                <Form.Item wrapperCol={{ offset: 20 }}>
-                                    <Button type="primary" htmlType="submit">
-                                        Submit
-                                    </Button>
-                                </Form.Item>
-                            </Form>
-                        </Modal>
-                    </div>
-                </Card>,
+                            <Form.Item wrapperCol={{ offset: 20 }}>
+                                <Button type="primary" htmlType="submit">
+                                    Submit
+                                </Button>
+                            </Form.Item>
+                        </Form>
+                    </Modal>
+                </div>
             </div>
                 <div className="table">
                     <Table columns={columns} dataSource={data} />

@@ -18,6 +18,8 @@ function LoginPage  () {
             email: Yup.string().required('Required'),
         }),
         onSubmit: values => {
+            // let category = JSON.parse(localStorage.getItem("TestLogin"));
+            // alert(category)
             let email = values?.email;
             let roleArr = email.split('@');
             let role = roleArr[0];

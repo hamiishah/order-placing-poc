@@ -4,28 +4,18 @@ import {v4 as uuidv4} from 'uuid';
 import { useHistory } from "react-router-dom";
 import Header from '../Page/header'
 import {PlusCircleOutlined} from '@ant-design/icons';
-import { Card, Col, Row,Table, Tag, Space,Modal, Button,Form, Input } from 'antd';
+import { Card, Col, Row,Table, Tag, Space,Modal, Button,Form, Input, Select } from 'antd';
 
 const Layout = () => {
+    const { Option } = Select;
     const history = useHistory();
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [categories, setcategories]= useState();
     const handlecard =()=>{
         history.push("/admin/orders");
     }
     const onFinish = (values: any) => {
         console.log('Success:', values);
-        let email = JSON.parse(localStorage.getItem("email"));
-        let password = JSON.parse(localStorage.getItem("password"));
-        if (!email && !password) {
-            localStorage.setItem("email", JSON.stringify([]))
-            localStorage.setItem("password", JSON.stringify([]))
-        }
-        let cat = JSON.parse(localStorage.getItem("categories"));
-        cat?.push({id: uuidv4(), email: email, password:password})
-        localStorage.setItem("categories", JSON.stringify(cat));
-        let category = JSON.parse(localStorage.getItem("categories"));
-        setcategories(category);
+        localStorage.setItem("TestLogin", JSON.stringify(values));
         setIsModalVisible(false);
     };
     const handleCancel = () => {
@@ -148,8 +138,8 @@ const Layout = () => {
                             onFinishFailed={onFinishFailed}
                         >
                             <Form.Item
-                                label="Username"
-                                name="username"
+                                label="email"
+                                name="email"
                                 rules={[{ required: true, message: 'Please input your username!' }]}
                             >
                                 <Input />
@@ -161,6 +151,18 @@ const Layout = () => {
                                 rules={[{ required: true, message: 'Please input your password!' }]}
                             >
                                 <Input.Password />
+                            </Form.Item>
+
+                            <Form.Item
+                                label="Role"
+                                name="role"
+                                rules={[{ required: true, message: 'Please Select Role!' }]}
+                            >
+                                <Select defaultValue="Select Role" style={{ width: 120 }}>
+                                    <Option value="ROLE_CLIENT">Client</Option>
+                                    <Option value="ROLE_ASSISTANT">Assistant</Option>
+                                    <Option value="ROLE_ADMIN">Assistant</Option>
+                                </Select>
                             </Form.Item>
 
                             <Form.Item wrapperCol={{ offset: 20 }}>
