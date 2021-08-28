@@ -62,7 +62,7 @@ function LoginPage  () {
                     <div>{formik.errors.password}</div>
                 ) : null}
                 <button type="submit" className="submit-btn">Submit</button>
-                <Link to="/register" className="Link">Register a new Account</Link>
+                <Link to="/forgetpassword" className="Link">Forget Password</Link>
             </form>
         </div>
     );

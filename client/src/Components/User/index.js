@@ -3,10 +3,9 @@ import './index.css'
 import Header from '../Page/header'
 import {Card, Space, Modal, Button, Form, Input,
     DatePicker,
-    InputNumber, Table, Tag,} from 'antd';
+    InputNumber,} from 'antd';
 import {PlusCircleOutlined} from "@ant-design/icons";
 
-const { Meta } = Card;
 
 const Layout = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -23,78 +22,6 @@ const Layout = () => {
     const showModal = () => {
         setIsModalVisible(true);
     };
-    const columns = [
-        {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-            render: text => <a>{text}</a>,
-        },
-        {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
-        },
-        {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
-        },
-        {
-            title: 'Tags',
-            key: 'tags',
-            dataIndex: 'tags',
-            render: tags => (
-                <>
-                    {tags.map(tag => {
-                        let color = tag.length > 5 ? 'geekblue' : 'green';
-                        if (tag === 'loser') {
-                            color = 'volcano';
-                        }
-                        return (
-                            <Tag color={color} key={tag}>
-                                {tag.toUpperCase()}
-                            </Tag>
-                        );
-                    })}
-                </>
-            ),
-        },
-        {
-            title: 'Action',
-            key: 'action',
-            render: (text, record) => (
-                <Space size="middle">
-                    <a>Invite {record.name}</a>
-                    <a>Delete</a>
-                </Space>
-            ),
-        },
-    ];
-
-    const data = [
-        {
-            key: '1',
-            name: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park',
-            tags: ['nice', 'developer'],
-        },
-        {
-            key: '2',
-            name: 'Jim Green',
-            age: 42,
-            address: 'London No. 1 Lake Park',
-            tags: ['loser'],
-        },
-        {
-            key: '3',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sidney No. 1 Lake Park',
-            tags: ['cool', 'teacher'],
-        },
-    ];
     return (
         <div>
             <div>
@@ -141,9 +68,12 @@ const Layout = () => {
                     </Modal>
                 </div>
             </div>
-                <div className="table">
-                    <Table columns={columns} dataSource={data} />
-                </div>
+                    <Card className='card' title="Card Entry Detail" style={{ width: 300 }}>
+                        <p>Previous Status: Active</p>
+                        <p>Previous Status: Reject</p>
+                        {/*<p>Card content</p>*/}
+                        <Button type="primary" className='resentbtn' onClick={showModal}> Resend Offer</Button>
+                    </Card>
         </div>
     );
 };
