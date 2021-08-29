@@ -2,15 +2,14 @@ import React from 'react';
 import './header.css'
 import { useHistory } from "react-router-dom";
 import { notification, Space } from 'antd';
+import {logout} from '../../../api/services';
 
 const Heeader =()=>{
     const history = useHistory();
     const openNotificationWithIcon = type => {
         history.push("/");
         notification[type]({
-            message: 'Notification Title',
-            description:
-                'Successfully Logout.',
+            message: 'Logout Successfully',
         });
     };
     return(

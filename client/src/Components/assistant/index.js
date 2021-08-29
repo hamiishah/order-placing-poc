@@ -1,9 +1,20 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import '../Page/layout.css'
 import Header from '../Page/header'
 import {Table, Tag, Space,Modal, Button,Form, Input } from 'antd';
+import {get} from "../../api/services";
+import API_URLS from "../../api/apiUrl";
 
 const Layout = () => {
+    const [cards, setCard] = useState([]);
+    const [count, setCount] = useState(0);
+    const getCards = async ()=>{
+        let res = await get(API_URLS.cards.list);
+        setCard(res?.data?.data);
+    }
+    useEffect( () => {
+        getCards();
+    }, [count]);
     const columns = [
         {
             title: 'Name',
@@ -12,42 +23,36 @@ const Layout = () => {
             render: text => <a>{text}</a>,
         },
         {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
+            title: 'Card Number',
+            dataIndex: 'card_number',
+            key: 'card_number',
         },
         {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
+            title: 'CVC',
+            dataIndex: 'cvc',
+            key: 'cvc',
         },
         {
-            title: 'Tags',
-            key: 'tags',
-            dataIndex: 'tags',
-            render: tags => (
-                <>
-                    {tags.map(tag => {
-                        let color = tag.length > 5 ? 'geekblue' : 'green';
-                        if (tag === 'loser') {
-                            color = 'volcano';
-                        }
-                        return (
-                            <Tag color={color} key={tag}>
-                                {tag.toUpperCase()}
-                            </Tag>
-                        );
-                    })}
-                </>
-            ),
+            title: 'Month',
+            dataIndex: 'month',
+            key: 'month',
+        },
+        {
+            title: 'Year',
+            dataIndex: 'year',
+            key: 'year',
+        },
+        {
+            title: 'Status',
+            key: 'status',
+            dataIndex: 'status',
         },
         {
             title: 'Action',
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
-                    <a>Invite {record.name}</a>
-                    <a>Delete</a>
+                    <a>Change Status</a>
                 </Space>
             ),
         },
@@ -83,7 +88,7 @@ const Layout = () => {
             </div>
             <div className="container">
                 <div>
-                    <Table columns={columns} dataSource={data} />
+                    <Table columns={columns} dataSource={cards} />
                 </div>
             </div>
         </div>

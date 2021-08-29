@@ -1,21 +1,36 @@
-import React, { useState } from 'react';
+import React, {useState,useEffect} from 'react';
 import '../Page/layout.css'
-import {v4 as uuidv4} from 'uuid';
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import Header from '../Page/header'
+import API_URLS from '../../api/apiUrl';
+import {get,post} from '../../api/services';
 import {PlusCircleOutlined} from '@ant-design/icons';
 import {Card, Col, Row, Table, Tag, Space, Modal, Button, Form, Input, Select, notification} from 'antd';
 
 const Layout = () => {
-    const { Option } = Select;
+    const {Option} = Select;
     const history = useHistory();
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const handlecard =()=>{
+    const [users, setUsers] = useState([]);
+    const [count, setCount] = useState(0);
+    const getUser = async ()=>{
+        let res = await get(API_URLS.users.list);
+        setUsers(res.data.data);
+    }
+    useEffect( () => {
+        getUser();
+    }, [count]);
+    const handlecard = () => {
         history.push("/admin/orders");
+    }
+    const handleDelete = async (data)=>{
+        let res = await post(API_URLS.users.delete,{_id:data?._id});
+        setCount(count+1);
     }
     const onFinish = (values: any) => {
         console.log('Success:', values);
         localStorage.setItem("TestLogin", JSON.stringify(values));
+        let res = post(API_URLS.users.add,...values);
         setIsModalVisible(false);
         openNotificationWithIcon('success')
     };
@@ -40,48 +55,35 @@ const Layout = () => {
     };
     const columns = [
         {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
+            title: 'First Name',
+            dataIndex: 'firstName',
+            key: 'firstName',
             render: text => <a>{text}</a>,
         },
         {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
+            title: 'Last Name',
+            dataIndex: 'lastName',
+            key: 'lastName',
         },
         {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
+            title: 'Email',
+            dataIndex: 'email',
+            key: 'email',
         },
         {
-            title: 'Tags',
-            key: 'tags',
-            dataIndex: 'tags',
-            render: tags => (
-                <>
-                    {tags.map(tag => {
-                        let color = tag.length > 5 ? 'geekblue' : 'green';
-                        if (tag === 'loser') {
-                            color = 'volcano';
-                        }
-                        return (
-                            <Tag color={color} key={tag}>
-                                {tag.toUpperCase()}
-                            </Tag>
-                        );
-                    })}
-                </>
-            ),
+            title: 'Role',
+            key: 'role',
+            dataIndex: 'role',
         },
         {
             title: 'Action',
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
-                    <a>Invite {record.name}</a>
-                    <a>Delete</a>
+                    {record?.role !== "ROLE_ADMIN" ?
+                        <a onClick={() => handleDelete(record)}>Delete</a>:
+                        <a disabled onClick={() => handleDelete(record)}>Delete</a>
+                    }
                 </Space>
             ),
         },
@@ -138,44 +140,58 @@ const Layout = () => {
                 </Row>
                 <div className="Add-users">
                     <Button type="primary" onClick={showModal}>
-                        <PlusCircleOutlined />Add users
+                        <PlusCircleOutlined/>Add users
                     </Button>
                     <Modal title="Add User" visible={isModalVisible} footer={null} onCancel={handleCancel}>
                         <Form
                             name="basic"
-                            initialValues={{ remember: true }}
+                            initialValues={{remember: true}}
                             onFinish={onFinish}
                             onFinishFailed={onFinishFailed}
                         >
                             <Form.Item
-                                label="email"
+                                label="Email"
                                 name="email"
-                                rules={[{ required: true, message: 'Please input your username!' }]}
+                                rules={[{required: true, message: 'Please input your username!'}]}
                             >
-                                <Input />
+                                <Input/>
+                            </Form.Item>
+                            <Form.Item
+                                label="Last Name"
+                                name="lastName"
+                                rules={[{required: true, message: 'Please input your Last Name!'}]}
+                            >
+                                <Input/>
+                            </Form.Item>
+                            <Form.Item
+                                label="First Name"
+                                name="firstName"
+                                rules={[{required: true, message: 'Please input your First Name!'}]}
+                            >
+                                <Input/>
                             </Form.Item>
 
                             <Form.Item
                                 label="Password"
                                 name="password"
-                                rules={[{ required: true, message: 'Please input your password!' }]}
+                                rules={[{required: true, message: 'Please input your password!'}]}
                             >
-                                <Input.Password />
+                                <Input.Password/>
                             </Form.Item>
 
                             <Form.Item
                                 label="Role"
                                 name="role"
-                                rules={[{ required: true, message: 'Please Select Role!' }]}
+                                rules={[{required: true, message: 'Please Select Role!'}]}
                             >
-                                <Select defaultValue="Select Role" style={{ width: 120 }}>
-                                    <Option value="ROLE_CLIENT">Client</Option>
-                                    <Option value="ROLE_ASSISTANT">Assistant</Option>
-                                    <Option value="ROLE_ADMIN">Assistant</Option>
+                                <Select defaultValue="Select Role" style={{width: 400}}>
+                                    <Option value="ROLE_CLIENT">CLIENT</Option>
+                                    <Option value="ROLE_ASSISTANT">ASSISTANT</Option>
+                                    <Option value="ROLE_ADMIN">ADMIN</Option>
                                 </Select>
                             </Form.Item>
 
-                            <Form.Item wrapperCol={{ offset: 20 }}>
+                            <Form.Item wrapperCol={{offset: 20}}>
                                 <Button type="primary" htmlType="submit">
                                     Submit
                                 </Button>
@@ -184,7 +200,7 @@ const Layout = () => {
                     </Modal>
                 </div>
                 <div>
-                    <Table columns={columns} dataSource={data} />
+                    <Table columns={columns} dataSource={users}/>
                 </div>
             </div>
         </div>

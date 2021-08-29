@@ -6,11 +6,21 @@ import {Card, notification, Modal, Button, Form, Input,
     InputNumber,} from 'antd';
 import {PlusCircleOutlined} from "@ant-design/icons";
 
-
+import API_URLS from '../../api/apiUrl';
+import {get,post} from '../../api/services';
 const Layout = () => {
+    const [cards,setCards] = useState([])
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const onFinish = (values) => {
+    const onFinish =  async (values) => {
         console.log('Success:', values);
+        let res = await post(API_URLS.cards.add,{
+            card_number:2121121,
+            cvc:323,
+            amount:32323,
+            month:12,
+            day:12
+        })
+
         setIsModalVisible(false);
         openNotificationWithIcon('success')
     };
@@ -50,6 +60,7 @@ const Layout = () => {
                             <Form.Item
                                 label="Card No"
                                 name="Card No"
+                                type="number"
                                 rules={[{ required: true, message: 'Please input your cardnumber!' }]}
                             >
                                 <Input maxLength="16"/>
@@ -62,6 +73,14 @@ const Layout = () => {
                             </Form.Item>
                             <Form.Item label="Add Amount"
                                        name="amount"
+                                       type="number"
+                                       rules={[{ required: true, message: 'Please Add Amount!' }]}
+                            >
+                                <InputNumber />
+                            </Form.Item>
+                            <Form.Item label="Add CVC"
+                                       name="cvc"
+                                       type="number"
                                        rules={[{ required: true, message: 'Please Add Amount!' }]}
                             >
                                 <InputNumber />

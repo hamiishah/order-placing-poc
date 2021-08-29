@@ -10,26 +10,35 @@ module.exports = {
 
             let account = await Account.findOne({email: email});
             if (!account) {
-                const error = new Error("Account Not found");
-                error.statusCode = 404;
-                throw error;
+                return res
+                    .status(404)
+                    .json({
+                        success: false,
+                        message: "Account Not Found",
+                        data:{}
+                    });
             }
             loadedUser = JSON.parse(JSON.stringify(account));
             let isEqual = await bcrypt.compare(password, account?.password);
             if (!isEqual) {
-                const error = new Error("Invalid email/password combination.");
-                error.statusCode = 401;
-                throw error;
+                return res
+                    .status(401)
+                    .json({
+                        success: false,
+                        message: "Invalid password",
+                        data:{}
+                    });
             }
             delete loadedUser?.password
             const token = jwt.sign(
                 {user: loadedUser},
-                process.env.SECRET_KEY,
+                "supersecretkey-OrderPlacing",
                 {expiresIn: "10h"}
             );
             return res
                 .status(200)
                 .json({
+                    success: true,
                     message: "Logged-in successfully",
                     id: loadedUser?._id,
                     role: loadedUser?.role,

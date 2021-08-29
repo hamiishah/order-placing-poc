@@ -15,7 +15,7 @@ router.post("/user-delete", auth.verifyAdmin, userController.removeUser);
 
 router.post("/card-add", auth.verifyClient, userController.postOrder);
 
-router.get("/card-list", auth.verifyAuthToken, userController.getOrders);
+router.get("/card-list", userController.getOrders);
 
 router.post("/update-profile", auth.verifyAuthToken, userController.updateProfile);
 

@@ -8,7 +8,7 @@ import Header from './Components/Page/header'
 import User from './Components/User'
 import Assistant from './Components/assistant'
 import Order from './Components/Admin/order';
-
+import { AuthRoute, ClientRoute, AdminRoute,AssistantRoute } from "./PrivateRoute";
 function App() {
   return (
     <div>
