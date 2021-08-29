@@ -27,10 +27,8 @@ const Layout = () => {
         let res = await post(API_URLS.users.delete,{_id:data?._id});
         setCount(count+1);
     }
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
-        localStorage.setItem("TestLogin", JSON.stringify(values));
-        let res = post(API_URLS.users.add,...values);
+    const onFinish =async (values) => {
+        let res = await post(API_URLS.users.add,values);
         setIsModalVisible(false);
         openNotificationWithIcon('success')
     };
@@ -89,29 +87,29 @@ const Layout = () => {
         },
     ];
 
-    const data = [
-        {
-            key: '1',
-            name: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park',
-            tags: ['nice', 'developer'],
-        },
-        {
-            key: '2',
-            name: 'Jim Green',
-            age: 42,
-            address: 'London No. 1 Lake Park',
-            tags: ['loser'],
-        },
-        {
-            key: '3',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sidney No. 1 Lake Park',
-            tags: ['cool', 'teacher'],
-        },
-    ];
+    {/*const data = [*/}
+    {/*    {*/}
+    {/*        key: '1',*/}
+    {/*        name: 'John Brown',*/}
+    {/*        age: 32,*/}
+    {/*        address: 'New York No. 1 Lake Park',*/}
+    {/*        tags: ['nice', 'developer'],*/}
+    {/*    },*/}
+    {/*    {*/}
+    {/*        key: '2',*/}
+    {/*        name: 'Jim Green',*/}
+    {/*        age: 42,*/}
+    //         address: 'London No. 1 Lake Park',
+    //         tags: ['loser'],
+    //     },
+    //     {
+    //         key: '3',
+    //         name: 'Joe Black',
+    //         age: 32,
+    //         address: 'Sidney No. 1 Lake Park',
+    //         tags: ['cool', 'teacher'],
+    //     },
+    // ];
     return (
         <div>
             <div>

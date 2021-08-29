@@ -13,14 +13,8 @@ const Layout = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const onFinish =  async (values) => {
         console.log('Success:', values);
-        let res = await post(API_URLS.cards.add,{
-            card_number:2121121,
-            cvc:323,
-            amount:32323,
-            month:12,
-            day:12
-        })
-
+        let res = await post(API_URLS.cards.add,values)
+        console.log("card data here", res)
         setIsModalVisible(false);
         openNotificationWithIcon('success')
     };
