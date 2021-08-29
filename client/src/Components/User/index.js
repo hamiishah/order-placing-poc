@@ -10,19 +10,23 @@ import API_URLS from '../../api/apiUrl';
 import {get,post} from '../../api/services';
 const Layout = () => {
     const [cards,setCards] = useState([])
+    const [count, setCount] = useState(0);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const onFinish =  async (values) => {
         console.log('Success:', values);
         let res = await post(API_URLS.cards.add,values)
-        console.log("card data here", res)
         setIsModalVisible(false);
-        openNotificationWithIcon('success')
+        if (res.data.message){
+            openNotificationWithIcon('success', res.data.message)
+            setCount(count+1);
+        }
+        if(res?.message){
+            openNotificationWithIcon('error', res?.message)
+        }
     };
-    const openNotificationWithIcon = type => {
+    const openNotificationWithIcon = (type, message) => {
         notification[type]({
-            message: 'Notification Title',
-            description:
-                'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+            message,
         });
     };
     const handleCancel = () => {
