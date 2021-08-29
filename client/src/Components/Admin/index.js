@@ -19,34 +19,36 @@ const Layout = () => {
     }
     useEffect( () => {
         getUser();
-    }, [count]);
+        // onFinish();
+    }, [count+1]);
     const handlecard = () => {
         history.push("/admin/orders");
     }
     const handleDelete = async (data)=>{
         let res = await post(API_URLS.users.delete,{_id:data?._id});
+        openNotificationWithIcon('success', res.data.message)
         setCount(count+1);
     }
     const onFinish =async (values) => {
         let res = await post(API_URLS.users.add,values);
         setIsModalVisible(false);
-        openNotificationWithIcon('success')
+        if (res.data.message){
+            openNotificationWithIcon('success', res.data.message)
+            setCount(count+1);
+        }
+        if(res?.message){
+            openNotificationWithIcon('error', res?.message)
+        }
+
     };
 
-    const openNotificationWithIcon = type => {
+    const openNotificationWithIcon = (type, message) => {
         notification[type]({
-            message: 'Notification Title',
-            description:
-                'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
-        });
+            message,
+             });
     };
     const handleCancel = () => {
         setIsModalVisible(false);
-    };
-    const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
-        setIsModalVisible(false);
-        openNotificationWithIcon('error')
     };
     const showModal = () => {
         setIsModalVisible(true);
@@ -86,30 +88,6 @@ const Layout = () => {
             ),
         },
     ];
-
-    {/*const data = [*/}
-    {/*    {*/}
-    {/*        key: '1',*/}
-    {/*        name: 'John Brown',*/}
-    {/*        age: 32,*/}
-    {/*        address: 'New York No. 1 Lake Park',*/}
-    {/*        tags: ['nice', 'developer'],*/}
-    {/*    },*/}
-    {/*    {*/}
-    {/*        key: '2',*/}
-    {/*        name: 'Jim Green',*/}
-    {/*        age: 42,*/}
-    //         address: 'London No. 1 Lake Park',
-    //         tags: ['loser'],
-    //     },
-    //     {
-    //         key: '3',
-    //         name: 'Joe Black',
-    //         age: 32,
-    //         address: 'Sidney No. 1 Lake Park',
-    //         tags: ['cool', 'teacher'],
-    //     },
-    // ];
     return (
         <div>
             <div>
@@ -145,7 +123,6 @@ const Layout = () => {
                             name="basic"
                             initialValues={{remember: true}}
                             onFinish={onFinish}
-                            onFinishFailed={onFinishFailed}
                         >
                             <Form.Item
                                 label="Email"
