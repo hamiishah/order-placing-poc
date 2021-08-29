@@ -2,16 +2,20 @@
     padding: 20px;
 }
 .Add-users{
-    margin-right: 20px;
+  margin: auto;
 }
 .order-cards{
-    display: flex;
-    margin-top: 40px;
-    justify-content: space-between;
-    margin-bottom: 30px;
+    margin-top: 60px;
+    margin-bottom: 80px;
+}
+.resentbtn{
+    margin-left: 70px;
 }
 .table{
     padding: 30px;
+}
+.card{
+    margin: auto;
 }
 .price{
     margin-top: 15px;

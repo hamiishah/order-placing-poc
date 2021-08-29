@@ -1,84 +1,51 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import '../User/index.css'
 import { useHistory } from "react-router-dom";
 import Header from '../Page/header'
 import {Space, Table, Tag,Button} from 'antd';
 import {LeftOutlined} from "@ant-design/icons";
+import API_URLS from "../../api/apiUrl";
+import axios from 'axios'
 
 const Layout = () => {
     const history = useHistory();
+    const [state, setstate] = useState([]);
+    const [loading, setloading] = useState(true);
+    useEffect(() => {
+        getData();
+    }, []);
+    const getData = async () => {
+        await axios.get(API_URLS.user).then(
+            res => {
+                setloading(false);
+                setstate(
+                    res.data.map(row => ({
+                        Name: row.name,
+                        Email: row.Email,
+                        City: row.City,
+                    }))
+                );
+            }
+        );
+    };
     const columns = [
         {
             title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-            render: text => <a>{text}</a>,
+            dataIndex: 'Name',
+            width: 150
         },
         {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
+            title: "Email",
+            dataIndex: "Email",
+            width: 150
         },
         {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
-        },
-        {
-            title: 'Tags',
-            key: 'tags',
-            dataIndex: 'tags',
-            render: tags => (
-                <>
-                    {tags.map(tag => {
-                        let color = tag.length > 5 ? 'geekblue' : 'green';
-                        if (tag === 'loser') {
-                            color = 'volcano';
-                        }
-                        return (
-                            <Tag color={color} key={tag}>
-                                {tag.toUpperCase()}
-                            </Tag>
-                        );
-                    })}
-                </>
-            ),
-        },
-        {
-            title: 'Action',
-            key: 'action',
-            render: (text, record) => (
-                <Space size="middle">
-                    <a>Invite {record.name}</a>
-                    <a>Delete</a>
-                </Space>
-            ),
+            title: "City",
+            dataIndex: "City",
+            width: 150
         },
     ];
 
-    const data = [
-        {
-            key: '1',
-            name: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park',
-            tags: ['nice', 'developer'],
-        },
-        {
-            key: '2',
-            name: 'Jim Green',
-            age: 42,
-            address: 'London No. 1 Lake Park',
-            tags: ['loser'],
-        },
-        {
-            key: '3',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sidney No. 1 Lake Park',
-            tags: ['cool', 'teacher'],
-        },
-    ];
     return (
         <div>
             <div>
@@ -88,7 +55,7 @@ const Layout = () => {
                 <Button type="primary" onClick={() => history.goBack()}>
                     <LeftOutlined />Back to main page
                 </Button>
-                <Table columns={columns} dataSource={data} />
+                <Table columns={columns} dataSource={state} />
             </div>
         </div>
     );

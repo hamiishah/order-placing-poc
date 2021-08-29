@@ -15,7 +15,7 @@ function App() {
         <Router>
             <Switch>
                 <Route path="/" exact component={LoginPage} />
-                <Route path="/resetpassowrd" exact component={Resetpassword} />
+                <Route path="/forgetpassword" exact component={Resetpassword} />
                 <Route path="/layout" exact component={Layout} />
                 <Route path="/admin" exact component={Admin} />
                 <Route path="/admin/orders" exact component={Order} />
