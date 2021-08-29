@@ -1,51 +1,44 @@
 import {Link} from 'react-router-dom';
 import React from 'react';
-import { useHistory } from "react-router-dom";
-import { useFormik } from 'formik';
+import {useHistory} from "react-router-dom";
+import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import './style.css';
 import {notification} from "antd";
+import {login} from '../../api/services';
 
-function LoginPage  () {
+function LoginPage() {
     const history = useHistory();
-    const openNotificationWithIcon = type => {
+    const openNotificationWithIcon = (type, message) => {
         notification[type]({
-            message: 'Notification Title',
-            description:
-                'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+            message,
         });
     };
     const formik = useFormik({
         initialValues: {
             email: '',
-            password:'',
+            password: '',
         },
         validationSchema: Yup.object({
             password: Yup.string().required('Required'),
             email: Yup.string().required('Required'),
         }),
-        onSubmit: values => {
-            // let category = JSON.parse(localStorage.getItem("TestLogin"));
-            // alert(category)
-            let email = values?.email;
-            let roleArr = email.split('@');
-            let role = roleArr[0];
-            values.role = role;
-            if(role==="admin"){
+        onSubmit: async (values) => {
+            let res = await login(values);
+            if (res.data && res.data.role === "ROLE_ADMIN") {
+                openNotificationWithIcon('success', res.data.message);
                 history.push("/admin");
-                openNotificationWithIcon('success')
             }
-            else if(role==="client"){
+            if (res.data && res.data.role === "ROLE_CLIENT") {
+                openNotificationWithIcon('success', res.data.message);
                 history.push("/user");
-                openNotificationWithIcon('success')
             }
-            else if(role==="assistant"){
+            if (res.data && res.data.role === "ROLE_ASSISTANT") {
+                openNotificationWithIcon('success', res.data.message);
                 history.push("/assistant");
-                openNotificationWithIcon('success')
             }
-            else{
-                openNotificationWithIcon('error')
-                history.push("/");
+            if (res?.message) {
+                openNotificationWithIcon('error', res?.message);
             }
         },
 

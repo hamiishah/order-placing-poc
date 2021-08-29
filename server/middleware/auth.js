@@ -12,7 +12,8 @@ const verifyToken = async (req, res, next) => {
     const token = authHeader.split(" ")[1];
     let decodedToken;
     try {
-        decodedToken = jwt.verify(token, process.env.SECRET_KEY);
+        decodedToken = jwt.verify(token, "supersecretkey-OrderPlacing");
+        console.log(decodedToken);
     } catch (err) {
         err.statusCode = 500;
         throw err;
@@ -32,10 +33,12 @@ exports.verifyAuthToken = async (req, res, next) => {
         throw error;
     }
 
+
     const token = authHeader.split(" ")[1];
+    console.log("token",token)
     let decodedToken;
     try {
-        decodedToken = jwt.verify(token, process.env.SECRET_KEY);
+        decodedToken = jwt.verify(token, "supersecretkey-OrderPlacing");
     } catch (err) {
         err.statusCode = 500;
         throw err;
