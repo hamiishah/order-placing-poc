@@ -1,11 +1,22 @@
 .container{
     padding: 20px;
 }
+.email{
+    margin-left: 30px;
+    color: #1890FF;
+}
 .cards{
     margin-bottom: 40px;
 }
+.ant-card-head {
+    background-color: #F8F9FA;
+    width: 100%;
+}
 .user-card{
     padding-bottom: 35px;
+}
+.Action{
+    margin-right: 20px;
 }
 .Add-users{
     margin-right: 20px;

@@ -7,8 +7,8 @@ const app = require("../app");
 const auth = require("../middleware/auth")
 module.exports = {
     getUser: (req, res, next) => {
-        const {_id} = req.body;
-        Account.findById(_id)
+        const {loggedInUserId} = req;
+        Account.findById(loggedInUserId)
             .where({isDelete: false})
             .select('-password')
             .sort({createdAt: -1})
@@ -90,7 +90,7 @@ module.exports = {
         let account = await Account.findOne({email: req.body.email})
         let data = req.body;
         if (account) {
-            return res.status(400).json({message: "User Already Exists"});
+            return res.status(404).send({statusCode:404,message: "User Already Exists"});
         } else {
             const user = new Account({
                 ...data
@@ -108,6 +108,10 @@ module.exports = {
         try{
             const decodedToken = io.getLoggedInUserId(req);
         const {card_number, month, year, cvc, amount} = req.body;
+        const found = Order.findOne({createdBy: decodedToken?.user?._id})
+            if(found){
+
+            }
         const order = new Order({
             card: {
                 card_number,
@@ -141,6 +145,20 @@ module.exports = {
             next(err);
         }
     },
+    getOrder: async (req, res, next) => {
+        try {
+            const {loggedInUserId} = req;
+            let orders = await Order.findOne({createdBy:loggedInUserId});
+            if(!orders){
+                return res.status(404).send({message:"Not Found",data:{}});
+            }
+            return res.status(200).json({message: "Fetch Cards Info", status: true, data: orders});
+        } catch
+            (err) {
+            if (!err.statusCode) err.statusCode = 500;
+            next(err);
+        }
+    },
     postOrderStatus: (req, res, next) => {
         const {_id, status} = req.body;
         const decodedToken = io.getLoggedInUserId(req);
@@ -165,7 +183,7 @@ module.exports = {
             })
             .then((updatedOrder) => {
                 io.getIO().emit("orders", {action: "update", order: updatedOrder});
-                res.status(200).json({updatedOrder});
+                res.status(200).json({message:"Status Updated Successfully",updatedOrder});
             })
             .catch((err) => {
                 if (!err.statusCode) err.statusCode = 500;

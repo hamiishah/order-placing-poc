@@ -38,6 +38,7 @@ function LoginPage() {
                 history.push("/assistant");
             }
             if (res?.message) {
+                console.log(res)
                 openNotificationWithIcon('error', res?.message);
             }
         },

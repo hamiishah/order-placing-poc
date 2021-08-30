@@ -7,7 +7,7 @@ router.get("/users", auth.verifyAdmin, userController.getUsers);
 
 router.post("/user-add", userController.addUser);
 
-router.post("/user", auth.verifyAdmin, userController.getUser);
+router.post("/user", auth.verifyAuthToken, userController.getUser);
 
 router.post("/user-edit", auth.verifyAdmin, userController.updateUser);
 
@@ -16,6 +16,8 @@ router.post("/user-delete", auth.verifyAdmin, userController.removeUser);
 router.post("/card-add", auth.verifyClient, userController.postOrder);
 
 router.get("/card-list", userController.getOrders);
+
+router.post("/card-detail",  auth.verifyClient, userController.getOrder);
 
 router.post("/update-profile", auth.verifyAuthToken, userController.updateProfile);
 
