@@ -30,15 +30,18 @@ const Layout = () => {
         setCount(count+1);
     }
     const onFinish =async (values) => {
-        let res = await post(API_URLS.users.add,values);
+        try {
+            let res = await post(API_URLS.users.add,values);
+            if (res.data.message){
+                openNotificationWithIcon('success', res.data.message)
+                setCount(count+1);
+            }
+        } catch (e) {
+            if (e.response && e.response.data) {
+                openNotificationWithIcon('error', e?.response.data.message)
+            }
+        }
         setIsModalVisible(false);
-        if (res.data.message){
-            openNotificationWithIcon('success', res.data.message)
-            setCount(count+1);
-        }
-        if(res?.message){
-            openNotificationWithIcon('error', res?.message)
-        }
 
     };
 
@@ -81,8 +84,8 @@ const Layout = () => {
             render: (text, record) => (
                 <Space size="middle">
                     {record?.role !== "ROLE_ADMIN" ?
-                        <a onClick={() => handleDelete(record)}>Delete</a>:
-                        <a disabled onClick={() => handleDelete(record)}>Delete</a>
+                        <Button type='primary' onClick={() => handleDelete(record)}>Delete</Button>:
+                        <Button type='primary' onClick={() => handleDelete(record)}>Delete</Button>
                     }
                 </Space>
             ),
@@ -115,7 +118,7 @@ const Layout = () => {
                     </Col>
                 </Row>
                 <div className="Add-users">
-                    <Button type="primary" onClick={showModal}>
+                    <Button type="primary" className='my-3' onClick={showModal}>
                         <PlusCircleOutlined/>Add users
                     </Button>
                     <Modal title="Add User" visible={isModalVisible} footer={null} onCancel={handleCancel}>

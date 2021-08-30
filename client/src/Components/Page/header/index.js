@@ -1,12 +1,13 @@
 import React from 'react';
 import './header.css'
-import { useHistory } from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import { notification, Space } from 'antd';
 import {logout} from '../../../api/services';
 
 const Heeader =()=>{
     const history = useHistory();
     const openNotificationWithIcon = type => {
+        localStorage.clear();
         history.push("/");
         notification[type]({
             message: 'Logout Successfully',
@@ -37,7 +38,7 @@ const Heeader =()=>{
                                      className="rounded-circle"/>
                             </a>
                             <ul className="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                                <li><a className="dropdown-item" href="#">Profile</a></li>
+                                <li><Link to="/profile" className="Link"><a href="/profile">Profile</a></Link></li>
                                 <li>
                                     <hr className="dropdown-divider"/>
                                 </li>

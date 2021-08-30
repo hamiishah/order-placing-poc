@@ -35,7 +35,6 @@ exports.verifyAuthToken = async (req, res, next) => {
 
 
     const token = authHeader.split(" ")[1];
-    console.log("token",token)
     let decodedToken;
     try {
         decodedToken = jwt.verify(token, "supersecretkey-OrderPlacing");
@@ -48,7 +47,8 @@ exports.verifyAuthToken = async (req, res, next) => {
         error.statusCode = 401;
         throw error;
     }
-    return decodedToken?.user;
+    req.loggedInUserId = decodedToken?.user?._id;
+    next();
 };
 exports.verifyAssistant = async (req, res, next) => {
     try {

@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import '../Page/layout.css'
 import Header from '../Page/header'
-import {Table, Tag, Space,Modal, Button,Form, Input } from 'antd';
-import {get} from "../../api/services";
+import {Table, Tag, Space, Modal, Button, Form, Input, DatePicker, InputNumber, notification} from 'antd';
+import {get, post} from "../../api/services";
 import API_URLS from "../../api/apiUrl";
 import axios from "axios";
 
@@ -15,6 +15,7 @@ const Layout = () => {
                 console.log(res.data.data)
                 setstate(
                     res.data.data.map(row => ({
+                        _id: row._id,
                         Amount: row.card.amount,
                         CVC: row.card.cvc,
                         Status: row.status,
@@ -29,7 +30,22 @@ const Layout = () => {
     useEffect( () => {
         getCards();
     }, [count]);
-
+    const Accept = async (data) => {
+        let res = await post(API_URLS.cards.status,{_id:data?._id, status:"Accepted"});
+        openNotificationWithIcon('success', res.data.message)
+        setCount(count+1);
+    };
+    const openNotificationWithIcon = (type, message) => {
+        notification[type]({
+            message,
+        });
+    };
+    const Reject =async (data) => {
+        let res = await post(API_URLS.cards.status,{_id:data?._id, status:"Rejected"});
+        console.log(res.data);
+        openNotificationWithIcon('success', res.data.message)
+        setCount(count+1);
+    };
     const columns = [
         {
             title: 'Amount',
@@ -65,9 +81,10 @@ const Layout = () => {
             title: 'Action',
             key: 'action',
             render: (text, record) => (
-                <Space>
-                    <a>Change Status</a>
-                </Space>
+                <>
+                    <Button type="primary" className='Action' onClick={()=>Accept(record)}> Accept</Button>
+                    <Button type="primary" className='Action' onClick={()=>Reject(record)}> Reject</Button>
+                </>
             ),
         },
     ];

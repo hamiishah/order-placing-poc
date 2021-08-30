@@ -1,8 +1,21 @@
 .container{
     padding: 20px;
 }
-.Add-users{
-  margin: auto;
+.status{
+    color: Green;
+    padding: 5px;
+    background-color: #F6FFED;
+    border: 1px solid green;
+    border-radius: 5px;
+    margin-left: 30px;
+}
+.number{
+    color: blue;
+    padding: 5px;
+    background-color: #F6FFED;
+    border: 1px solid green;
+    border-radius: 5px;
+    margin-left: 15px;
 }
 .order-cards{
     margin-top: 60px;
